@@ -1,0 +1,137 @@
+
+ 2**3就是2的3次方
+变量：python是现在内存上存储数据之后，在通过一个标签去引用他。和C不同
+id(a):变量a的存储地址
+input()键盘输入,输入的是字符a=int(input())
+序列（列表，元组，字典）：
+列表，元祖和字典是序列类型，可以索引和切片
+
+序列是从0开始编号。
+切片操作符是序列名后跟一个方括号，a[0:5:2]
+结果‘ace’，0-开始值，5-结束值，2-步长
+a[::2]=’ace’;a[:]=’abcde’冒号不可少，数字可选
+序列操作:
+len()：求字符串长度
++：拼接字符串
+*5：重复字符串5次
+in：字符是否在字符串中,如果在返回True
+max():返回最大值
+min():返回最小值
+ 元组：是一个不可变的类型，用（）表示，用逗号分隔
+userinfo=’andy 10 male’；userinfo=’Annie 30 female’
+取姓名可以用切片方式，第一个userinfo[:5]，第二个userinfo[:6]但没有规律
+t1=(‘andy’,10,’male’) ;t2=(’Annie’, 30,’ female’)则t1[0]就是andy
+t2[0]=Annie。T1[1]=10,但改变元组元素是不可以的。
+T1[1]=11是不行的
+空元组t1=()
+一个元素 t2=(2,)必须加逗号.否则认为是一个int2
+
+列表：用[]表示,操作跟元组tuple类似，但列表元素可以更改，操作：
+取值：切片和索引；list[]
+添加：list.append()
+删除：del(list[]);list.remove(list[])
+x修改：list[]=x
+查查找：var in list
+help(list)；帮助
+python把所有的都作为对象。对象是类一个具体的实例
+对象=属性+方法；属性描述对象，方法就是可以做什么
+字典：用{}表示 dict={‘name’:’andy’,‘age’:’10’,’gender’:’male’},唯一映射类型（哈希表），是无序的。字典对象是可变的，同一字典中可以使用不同类型的键值。前面的表示键，后面表示对应的值
+
+python循环后要加“：”，定义函数后加“：”,print()
+>>>dict1={‘gender’:’male’,’age’:10,’name’:’andy’}
+>>>for k in dict1：   (k表示键)
+…	print(k)
+…
+结果为
+gender
+age
+name
+>>>dict1={‘gender’:’male’,’age’:10,’name’:’andy’}
+>>>for k in dict1：   (k表示键)
+…	print(dict1[k])  打印的为值
+…
+结果为
+male
+25
+andy
+
+字典更新和删除
+del dict1[‘a’]删除
+dic1[‘tel’]=’12345678’
+del[dick1‘tel’]=’12345678’
+dict1.pop(‘age’)
+dict1.clear()全部清空，但dict1还是一个空字典。
+del.dict1删除该字典
+dict1.keys()返回字典中所有的键key列表
+dict1.values()
+用if语句时，尽量用逻辑运算符，and or not
+
+for循环，遍历序列（列表和字符串，元组）
+for语法
+-for iterating_var in sequence：（terating_var迭代变量）
+statements（s）
+range（）可以快生成一个序列。Range(5): [1,2,3,4,5]
+例如：for x in range（100）：
+序列遍历：
+1将序列中所有的元素取出来
+for x in ‘hello’:
+	print(x)
+2通过索引取值把所有元素取出来
+s = ‘hello’
+for x in range (len(s)):取得是索引值，而不是字符
+		print(s[x])
+
+s=’hello’
+l=[1,2,3,’a’, ‘b’]
+t=(7,8,9,’x’,’y’)
+for x in l:
+
+字典遍历：
+d={1:100,2:200,3:300,5:500}
+for x in d:
+	print(x)此时打印的是字典的key1,2,3,5
+	print(d[x])此时打印的是字典的值100,200,300,500
+	print d.items()打印的是key和键值对
+
+for k,v in d.items():
+	print(k)
+	print(v)
+ 
+循环控制：
+for x in range(1,11):
+	print(x)
+if x ==2:
+		print(‘hello,2222’)
+		continue#循环会跳过当次循环的余下语句，进行下次循环
+if x ==3:
+		pass#代码桩，起到占位作用
+if x == 5:
+		break#结束循环
+print(‘#’*50)
+if x == 6:
+		exit（）#程序结束
+else(此else对应for)
+		print(‘ending’)
+	
+while循环中必须有结束条件
+while Ture:
+	print(‘hello’)
+	x = input(‘please input something,q for quit’)
+	if x == ‘q’
+		break
+
+x = ‘’
+while x!=’q’:
+	print(‘hello’)
+	x = input(‘please input something,q for quit’)
+ 	if not x:
+          break
+else:#对应的是while，条件失败执行else
+	print(‘ending……’)
+函数
+工具集，排序，极值
+def 函数名（参数表）：#可以没有参数
+	函数体
+函数调用：
+函数名（参数表）
+
