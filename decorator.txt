@@ -1,0 +1,129 @@
+
+
+
+
+一、Python的函数相关基础
+第一，必须强调的是python是从上往下顺序执行的,而且碰到函数的定义代码块是不会立即执行它的，只有等到该函数被调用时，才会执行其内部的代码块。
+>>>def foo():
+…	print("foo函数被运行了！") 
+#如果就这么样，foo里的语句是不会被执行的。程序只是简单的将定义代码块读入内存中。
+
+再看看，顺序执行的例子：
+>>>def foo():
+…	 print("我是上面的函数定义！")
+>>>def foo():
+…	print("我是下面的函数定义！")
+>>>foo()
+#运行结果：
+我是下面的函数定义
+
+可见，因为顺序执行的原因，下面的foo将上面的foo覆盖了。因此，在Python中代码的放置位置是有要求的，不能随意摆放，函数体要放在被调用的语句之前。
+
+其次，我们还要先搞清楚几样东西：函数名、函数体、返回值，函数的内存地址、函数名加括号、函数名被当作参数、函数名加括号被当作参数、返回函数名、返回函数名加括号。对于如下的函数：
+>>>def foo():
+…	print("让我们干点啥！")
+…	return "ok"
+>>>foo()
+
+函数名：　　　　　　　　foo
+函数体：　　　　　　　　第1-3行
+返回值：　　　　　　　　字符串“ok”　　　　如果不显式给出return的对象，那么默认返回None
+函数的内存地址：　　　　当函数体被读进内存后的保存位置，它由标识符即函数名foo引用，
+                    也就是说foo指向的是函数体在内存内的保存位置。
+函数名加括号：　　　　   例如foo（），函数的调用方法，只有见到这个括号，程序会根据
+                    函数名从内存中找到函数体，然后执行它
+
+
+再看下面这个例子：
+
+>>>def outer(func):
+…	def inner():
+…		print("我是内层函数！")
+…	return inner
+…
+def foo():
+…	print("我是原始函数！") 
+…
+>>>outer(foo)
+<function outer.<locals>.inner at 0x101386840>   #输出
+>>>outer(foo())
+我是原始函数                                       #输出
+<function outer.<locals>.inner at 0x1013868c8>  #输出
+
+
+在python中，一切都是对象，函数也不例外。因此可以将函数名，甚至函数名加括号进行调用的方式作为另一个函数的返回值。
+上面代码中，outer和foo是两个函数，outer(foo)表示将foo函数的函数名当做参数传递给outer函数并执行outer函数；
+outer(foo())表示将foo函数执行后的返回值当做参数传递给outer函数并执行outer函数，由于foo函数没有指定返回值，实际上它传递给了outer函数一个None。
+注意其中的差别，有没有括号是关键!!!!
+　  同样，在outer函数内部，返回了一个inner，它是在outer函数内部定义的一个函数，注意，由于inner后面没有加括号，所以返回的是inner的函数体，实际上也就是inner这个名字指向的内存地址。
+    那么，如果outer函数返回的是inner()呢？现在你应该已经很清楚了，它会先执行inner函数的内容，然后返回个None给outer，outer再把这个None返回给调用它的对象。
+
+
+>>>def outer(func):
+…	def inner():
+…		print("我是内层函数！")
+…	return inner()                          #注意带小括号。此return对应outer函数，返回的是 inner()现在你应该#会先执行inner函数的内容（打印“我是内层函数”），然后返回个None给outer（因为inner（）没有定义返回），outer再把这个None返回给调用它的对象。
+…
+def foo():
+…	print("我是原始函数！") 
+…
+>>>outer(foo)
+我是内层函数                                       #输出
+>>>outer(foo())
+我是原始函数                                       #输出
+我是内层函数                                       #输出
+
+
+装饰器学习：（九步入门）
+1.最简单函数
+>>>def myfunc():
+…    print("myfunc() called.")
+myfunc() called.    #输出
+
+2.使用装饰函数在函数执行前和执行后分别附加额外功能.装饰函数的参数是被装饰的函数对象，返回原函数对象
+装饰的实质语句: myfunc = deco(myfunc)
+>>> def deco(func):
+...     print('before myfunc() called.')
+...     func()
+...     print('after myfunc() called.')
+...     return func
+... 
+>>> def myfunc():
+...     print('myfunc() called.')
+... 
+>>> myfunc = deco(myfunc)
+
+before myfunc() called.
+myfunc() called.
+after myfunc() called.
+
+3.使用语法糖@来装饰函数，相当于“myfunc = deco(myfunc)”
+>>> def deco(func):
+...     print('before myfunc() called.')
+...     func()
+...     print('after myfunc() called.')
+...     return func
+>>> @deco
+... def myfunc():
+...     print('myfunc() called.')
+... 
+
+before myfunc() called.
+myfunc() called.
+after myfunc() called.
+
+4.使用内嵌包装函数来确保每次新函数都被调用.内嵌包装函数的形参和返回值与原函数相同，装饰函数返回内嵌包装函数对象
+
+def deco(func):
+    def _deco():
+        print("before myfunc() called.")
+        func()
+        print("  after myfunc() called.")
+        # 不需要返回func，实际上应返回原函数的返回值
+    return _deco
+ 
+@deco
+def myfunc():
+    print(" myfunc() called.")
+    return 'ok'
+
