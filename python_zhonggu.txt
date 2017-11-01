@@ -186,3 +186,25 @@ result = {+:x+y,-:x-y,*:x*y,/:x/y}
 print(result.get(+))
 
 
+常用内置函数：
+数值类：
+abs()绝对值函数；max()求最大值;min()求最小值;len()求字符串列表长度divmod()求商和余数pow()round()
+help(divmod)
+callable() 某个对象是否可被调用
+isinstance()判断某个对象类型
+cmp()比较两个字符串是否一样
+range()快速生成一个序列
+xrange()生成器，比range()效率高的多
+类型转换函数：
+type();int();float();complex();str();list();tuple();hex(),oct(),chr(),ord()
+
+内置函数-字符串处理
+str.capitalize():
+str.replace():
+str.split():
+序列处理函数
+len(),max(),min(),fliter(),zip(),map(),reduce() 
+
+模块
+
+
