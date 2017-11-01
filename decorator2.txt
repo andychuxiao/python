@@ -1,4 +1,4 @@
-http://www.jb51.net/article/99585.htm
+﻿http://www.jb51.net/article/99585.htm
 http://www.cnblogs.com/fanweibin/p/5418652.html
 http://www.cnblogs.com/rhcad/archive/2011/12/21/2295507.html
 https://coolshell.cn/articles/11265.html
@@ -67,7 +67,7 @@ C.只要确保最后返回一个可执行的函数即可（可以是原来的输
 不需要针对参数进行处理和优化
 
 def decorator(func):
-    print "hello"
+    Print("hello")
     return func
 
 @decorator
@@ -76,33 +76,45 @@ def foo():
 
 foo()
 foo() 等价于:
-
 foo = decorator(foo)
 foo()
+
+输出结果如下：
+hello
+
+
+
 无参数装饰器 – 包装带参数函数
 def decorator_func_args(func):
     def handle_args(*args, **kwargs): #处理传入函数的参数
-        print "begin"
+        Print("begin")
         func(*args, **kwargs)   #函数调用
-        print "end"
+        Print("end")
     return handle_args
 
 
 @decorator_func_args
 def foo2(a, b=2):
-    print a, b
+    Print(a, b)
 
 foo2(1)
+
 foo2(1) 等价于
 
 foo2 = decorator_func_args(foo2)
 foo2(1)
+
+输出结果如下：
+begin
+1,2
+end
+
+
 带参数装饰器 – 包装无参数函数
 def decorator_with_params(arg_of_decorator):#这里是装饰器的参数
-    print arg_of_decorator
-    #最终被返回的函数
-    def newDecorator(func):
-        print func
+    Print(arg_of_decorator)
+    def newDecorator(func):#最终被返回的函数
+        Print(func)
         return func
     return newDecorator
 
@@ -111,39 +123,57 @@ def decorator_with_params(arg_of_decorator):#这里是装饰器的参数
 def foo3():
     pass
 foo3()
+
+
+输出结果如下：
+deco_args
+function foo3 at 0x********
+
+
+
+
 与前面的不同在于：比上一层多了一层封装，先传递参数，再传递函数名
 
-第一个函数decomaker是装饰函数，它的参数是用来加强“加强装饰”的。由于此函数并非被装饰的函数对象，所以在内部必须至少创建一个接受被装饰函数的函数，然后返回这个对象（实际上此时foo3= decorator_with_params(arg_of_decorator)(foo3)）
+第一个函数decorator_with_params是装饰函数，它的参数是用来加强“加强装饰”的。由于此函数并非被装饰的函数对象，所以在内部必须至少创建一个接受被装饰函数的函数，然后返回这个对象（实际上此时foo3= decorator_with_params("deco_args")(foo3)）
 
 带参数装饰器– 包装带参数函数
 def decorator_whith_params_and_func_args(arg_of_decorator):
     def handle_func(func):
         def handle_args(*args, **kwargs):
-            print "begin"
+            Print("begin")
             func(*args, **kwargs)
-            print "end"
-            print arg_of_decorator, func, args,kwargs
+            Print("end")
+            Print(arg_of_decorator, func, args,kwargs) 
         return handle_args
     return handle_func
 
 
 @decorator_whith_params_and_func_args("123")
 def foo4(a, b=2):
-    print "Content"
+    Print("Content")
 
 foo4(1, b=3)
+
+输出结果如下：
+begin
+Content
+end
+123 <function foo4 at 0x********> (1,) {'b':3}
+
+
+
 内置装饰器
 内置的装饰器有三个：staticmethod,classmethod, property
 
 class A():
     @staticmethod
     def test_static():
-        print "static"
+        Print() "static"
     def test_normal(self):
-        print "normal"
+        Print() "normal"
     @classmethod
     def test_class(cls):
-        print "class", cls
+        Print() "class", cls
 
 a = A()
 A.test_static()
@@ -197,15 +227,15 @@ class B():
         self.__prop = 1
     @property
     def prop(self):
-        print "call get"
+        Print() "call get"
         return self.__prop
     @prop.setter
     def prop(self, value):
-        print "call set"
+        Print() "call set"
         self.__prop = value
     @prop.deleter
     def prop(self):
-        print "call del"
+        Print() "call del"
         del self.__prop
 其他
 A.装饰器的顺序很重要，需要注意
@@ -257,7 +287,7 @@ def count_time(is_debug):
 def pr():
     for i in range(1,1000000):
         i = i * 2
-    print "hello world"
+    Print() "hello world"
 
 def test():
     pr()
